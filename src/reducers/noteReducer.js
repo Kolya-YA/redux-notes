@@ -4,13 +4,14 @@ const noteReducer = (state = [], action) => {
       return [...state, action.data]
     case 'TOGGLE_IMPORTANCE':
       const id = action.data.id
-      const noteToChange = state.find(n => n.id === id)
-      const changedNote = { 
-        ...noteToChange, 
-        important: !noteToChange.important 
-      }
+      const changedNote = note => (
+        {
+          ...note,
+          important: !note.important
+        }
+      )
       return state.map(note =>
-        note.id !== id ? note : changedNote 
+        note.id !== id ? note : changedNote(note)
       )
     default:
       return state
